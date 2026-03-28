@@ -41,7 +41,6 @@
       pointer-events: none; z-index: 0;
     }
 
-    /* ── NAV ── */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       padding: 24px 48px;
@@ -164,18 +163,15 @@
     .avatar-stat-value em { color: var(--amber); font-style: normal; }
     .avatar-corner { position: absolute; top: 24px; right: 24px; font-family: 'DM Mono', monospace; font-size: 0.55rem; letter-spacing: 0.2em; color: var(--amber); text-transform: uppercase; writing-mode: vertical-rl; }
 
-    /* ── DIVIDER ── */
     .divider { padding: 0 80px; display: flex; align-items: center; gap: 20px; position: relative; z-index: 1; }
     .divider-line { flex: 1; height: 1px; background: var(--grid); }
     .divider-label { font-family: 'Bebas Neue', sans-serif; font-size: 0.9rem; letter-spacing: 0.3em; color: var(--muted); }
 
-    /* ── PROJECTS ── */
     #projects { padding: 80px 80px; }
     .projects-header { margin-bottom: 60px; }
     .section-num { font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.25em; color: var(--rust); margin-bottom: 8px; }
     .section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem, 5vw, 4.5rem); letter-spacing: 0.05em; line-height: 1; }
 
-    /* ── CARDS GRID ── */
     .cards-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -197,12 +193,10 @@
     }
     .tilt-card:hover .card-glare { opacity: 1; }
 
-    /* ── IMAGE CAROUSEL in card ── */
     .card-visual {
       position: relative; height: 260px; overflow: hidden;
       background: #0d0d0b;
     }
-    /* Themed overlay to make photos fit the dark amber palette */
     .card-visual::after {
       content: '';
       position: absolute; inset: 0;
@@ -216,7 +210,6 @@
       z-index: 2;
       pointer-events: none;
     }
-    /* Amber tint overlay for theme cohesion */
     .card-visual::before {
       content: '';
       position: absolute; inset: 0;
@@ -241,7 +234,6 @@
       display: block;
     }
 
-    /* Placeholder when no real image loaded yet */
     .card-visual-placeholder {
       position: absolute; inset: 0; z-index: 1;
       display: flex; align-items: center; justify-content: center;
@@ -265,7 +257,6 @@
       backdrop-filter: blur(6px); z-index: 6;
     }
 
-    /* Carousel dots */
     .carousel-dots {
       position: absolute; bottom: 12px; left: 50%;
       transform: translateX(-50%);
@@ -292,7 +283,6 @@
       border: 1px solid rgba(240,235,224,0.08); padding: 3px 8px; border-radius: 2px;
     }
 
-    /* ── WHAT'S TO COME ── */
     #coming { padding: 80px 80px 120px; }
     .coming-header { margin-bottom: 60px; }
     .coming-grid {
@@ -341,19 +331,16 @@
     .coming-desc { font-size: 0.8rem; line-height: 1.7; color: var(--muted); }
     .coming-badge { display: inline-block; margin-top: 16px; font-family: 'DM Mono', monospace; font-size: 0.55rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--rust); border: 1px solid rgba(196,80,42,0.3); padding: 3px 8px; }
 
-    /* ── FOOTER ── */
     footer { border-top: 1px solid var(--grid); padding: 32px 80px; display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 1; }
     .footer-note { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.15em; color: var(--muted); }
     .footer-amber { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 0.15em; color: var(--amber); }
 
-    /* ── SCROLL ANIMATIONS ── */
     .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
     .reveal-delay-1 { transition-delay: 0.12s; }
     .reveal-delay-2 { transition-delay: 0.24s; }
     .reveal-delay-3 { transition-delay: 0.36s; }
 
-    /* ── RESPONSIVE ── */
     @media (max-width: 960px) {
       #about { grid-template-columns: 1fr; padding: 100px 32px 60px; }
       .about-right { display: none; }
@@ -372,7 +359,6 @@
 </head>
 <body>
 
-  <!-- NAV -->
   <nav>
     <a class="nav-logo" href="#about">imdeni.xyz</a>
     <div class="nav-links">
@@ -382,7 +368,6 @@
     </div>
   </nav>
 
-  <!-- ── ABOUT ── -->
   <section id="about">
     <div class="about-left reveal">
       <div class="eyebrow">Student · Aspiring Robotics Engineer</div>
@@ -436,7 +421,6 @@
     <div class="divider-line"></div>
   </div>
 
-  <!-- ── PROJECTS ── -->
   <section id="projects">
     <div class="projects-header reveal">
       <div class="section-num">// 02</div>
@@ -445,14 +429,12 @@
 
     <div class="cards-grid">
 
-      <!-- CARD 1 — ROBOTIC HAND -->
       <div class="tilt-card-wrap reveal reveal-delay-1">
         <div class="tilt-card card1" data-tilt>
           <div class="card-glare"></div>
           <div class="card-visual">
             <div class="card-visual-grid"></div>
 
-            <!-- Slide 1: real photo -->
             <div class="carousel-slide active">
               <img
                 src="https://raw.githubusercontent.com/xendeni/Imdeni/main/img1.jpeg"
@@ -460,19 +442,7 @@
                 onerror="this.closest('.carousel-slide').style.display='none'; this.closest('.card-visual').querySelector('.card-visual-placeholder').style.display='flex';"
               />
             </div>
-            <!-- Slide 2: add your second image below -->
-            <!--
-              TO ADD A SECOND PHOTO:
-              1. Upload your image to the repo, e.g. img2.jpeg
-              2. Uncomment the slide below and update the src
-            -->
-            <!--
-            <div class="carousel-slide">
-              <img src="https://raw.githubusercontent.com/xendeni/Imdeni/main/img2.jpeg" alt="Robotic Hand – photo 2" />
-            </div>
-            -->
-
-            <!-- Fallback placeholder if image fails -->
+       
             <div class="card-visual-placeholder" style="display:none;">
               <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
                 <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
@@ -499,35 +469,22 @@
         </div>
       </div>
 
-      <!-- CARD 2 — AI HOMEWORK ASSISTANT -->
       <div class="tilt-card-wrap reveal reveal-delay-2">
         <div class="tilt-card card2" data-tilt>
           <div class="card-glare"></div>
           <div class="card-visual">
             <div class="card-visual-grid"></div>
 
-            <!--
-              AI ASSISTANT PHOTOS:
-              Add your images to the repo and update the src values below.
-              Uncomment slide 2 when you have a second photo.
-            -->
+
             <div class="carousel-slide active">
-              <!--
-                Replace the placeholder src with your real image, e.g.:
-                src="https://raw.githubusercontent.com/xendeni/Imdeni/main/ai1.jpeg"
-              -->
+    
               <div class="card-visual-placeholder" style="display:flex; position:relative; inset:unset; width:100%; height:100%;">
                 <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
                   <path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 8v4l3 3"/><circle cx="19" cy="5" r="3"/>
                 </svg>
               </div>
             </div>
-            <!--
-            <div class="carousel-slide">
-              <img src="https://raw.githubusercontent.com/xendeni/Imdeni/main/ai2.jpeg" alt="AI Assistant – photo 2" />
-            </div>
-            -->
-
+   
             <div class="card-tag">AI / Python</div>
             <div class="carousel-dots" id="dots-ai"></div>
           </div>
@@ -557,7 +514,6 @@
     <div class="divider-line"></div>
   </div>
 
-  <!-- ── WHAT'S TO COME ── -->
   <section id="coming">
     <div class="coming-header reveal">
       <div class="section-num">// 03</div>
@@ -566,7 +522,6 @@
 
     <div class="coming-grid">
 
-      <!-- PHOTO CARD -->
       <div class="coming-photo-item reveal">
         <div class="coming-photo-left">
           <div class="coming-num">01</div>
@@ -591,7 +546,6 @@
         </div>
       </div>
 
-      <!-- ITEM 2 -->
       <div class="coming-item reveal reveal-delay-1">
         <div class="coming-num">02</div>
         <svg class="coming-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -602,7 +556,6 @@
         <p class="coming-desc">I have many ideas for builds using computer vision technology among the likes of YOLO and hope to put these ideas into fruition soon!</p>
       </div>
 
-      <!-- ITEM 3 -->
       <div class="coming-item reveal reveal-delay-2">
         <div class="coming-num">03</div>
         <svg class="coming-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -617,14 +570,12 @@
     </div>
   </section>
 
-  <!-- FOOTER -->
   <footer>
     <div class="footer-note">© 2025 imdeni.xyz / Built from scratch (maybe a little help)</div>
     <div class="footer-amber">dupedeni</div>
   </footer>
 
   <script>
-    // ── SMOOTH SCROLL (for nav links + cta button) ──
     function smoothTo(e, id) {
       e.preventDefault();
       document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
@@ -638,19 +589,16 @@
       });
     });
 
-    // ── SCROLL REVEAL ──
     const observer = new IntersectionObserver(entries => {
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-    // ── AUTO-ROTATING IMAGE CAROUSEL ──
     function initCarousel(card, dotsId) {
       const slides = card.querySelectorAll('.carousel-slide');
       const dotsContainer = document.getElementById(dotsId);
       if (slides.length <= 1) return; // only animate if 2+ slides
 
-      // Build dots
       slides.forEach((_, i) => {
         const dot = document.createElement('button');
         dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
@@ -675,7 +623,6 @@
     initCarousel(document.querySelector('.card1'), 'dots-hand');
     initCarousel(document.querySelector('.card2'), 'dots-ai');
 
-    // ── 3D TILT + PARALLAX ──
     document.querySelectorAll('[data-tilt]').forEach(card => {
       const wrap = card.closest('.tilt-card-wrap');
       const glare = card.querySelector('.card-glare');
@@ -700,7 +647,6 @@
       });
     });
 
-    // ── PARALLAX on about sidebar ──
     window.addEventListener('scroll', () => {
       const y = window.scrollY;
       document.querySelectorAll('.about-avatar-wrap').forEach(el => {
