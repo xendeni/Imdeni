@@ -6,354 +6,234 @@
   <title>imdeni.xyz</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;400;500&family=DM+Sans:opsz,wght@9..40,300;9..40,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,500;0,600;1,500&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet" />
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #0a0a08;
-      --cream: #f0ebe0;
-      --amber: #e8a435;
-      --rust: #c4502a;
-      --muted: #5a5a52;
-      --grid: rgba(240,235,224,0.04);
-      --card-bg: #141412;
-      --card-border: rgba(232,164,53,0.18);
+      --paper: #f2ede1;
+      --ink: #201f1a;
+      --line: #cdc4ac;
+      --accent: #b23a2e;
+      --accent-2: #34544a;
+      --muted: #726c5c;
+      --card-bg: #ece5d4;
     }
 
     html { scroll-behavior: smooth; }
 
     body {
-      background: var(--bg);
-      color: var(--cream);
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 300;
-      overflow-x: hidden;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-weight: 400;
     }
 
+    /* faint graph-paper texture behind everything */
     body::before {
       content: '';
       position: fixed; inset: 0;
       background-image:
-        linear-gradient(var(--grid) 1px, transparent 1px),
-        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-      background-size: 60px 60px;
+        linear-gradient(rgba(32,31,26,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(32,31,26,0.05) 1px, transparent 1px);
+      background-size: 28px 28px;
       pointer-events: none; z-index: 0;
     }
 
     nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      padding: 24px 48px;
+      position: sticky; top: 0; z-index: 100;
+      padding: 20px 48px;
       display: flex; justify-content: space-between; align-items: center;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--grid);
+      background: rgba(242,237,225,0.9);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid var(--line);
     }
     .nav-logo {
-      font-family: 'DM Mono', monospace;
-      font-size: 1rem;
-      letter-spacing: 0.05em;
-      color: var(--amber);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.95rem;
+      color: var(--ink);
       text-decoration: none;
     }
-    .nav-links { display: flex; gap: 40px; }
+    .nav-links { display: flex; gap: 32px; }
     .nav-links a {
       color: var(--muted);
       text-decoration: none;
-      font-family: 'DM Mono', monospace;
-      font-size: 0.7rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      transition: color 0.3s;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      transition: color 0.2s;
     }
-    .nav-links a:hover { color: var(--cream); }
+    .nav-links a:hover { color: var(--accent); }
 
     section { position: relative; z-index: 1; }
 
-    /* ── ABOUT ── */
+    /* ---------- about / intro ---------- */
     #about {
-      min-height: 100vh;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      align-items: center;
-      padding: 120px 80px 80px;
-      gap: 60px;
+      padding: 90px 64px 70px;
+      max-width: 760px;
     }
     .eyebrow {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.68rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--amber);
-      margin-bottom: 20px;
-      display: flex; align-items: center; gap: 12px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent);
+      margin-bottom: 18px;
     }
-    .eyebrow::before { content: ''; width: 40px; height: 1px; background: var(--amber); }
     .hero-name {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(4rem, 8vw, 7.5rem);
-      line-height: 0.9;
-      letter-spacing: 0.02em;
-      color: var(--cream);
+      font-family: 'Newsreader', serif;
+      font-style: italic;
+      font-weight: 500;
+      font-size: clamp(2.6rem, 6vw, 3.8rem);
+      line-height: 1.1;
+      margin-bottom: 22px;
+    }
+    .hero-name em { color: var(--accent); font-style: italic; }
+    .hero-tagline {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--muted);
+      max-width: 560px;
       margin-bottom: 28px;
     }
-    .hero-name span { color: var(--amber); }
-    .hero-tagline {
-      font-size: 0.95rem;
-      line-height: 1.85;
-      color: var(--muted);
-      max-width: 460px;
-      margin-bottom: 36px;
-    }
-    .hero-tagline strong { color: var(--cream); font-weight: 400; }
+    .hero-tagline strong { color: var(--ink); font-weight: 500; }
 
-    .about-pills { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 40px; }
+    .about-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
     .pill {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      padding: 6px 14px;
-      border: 1px solid var(--card-border);
-      border-radius: 2px;
-      color: var(--amber);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      padding: 5px 12px;
+      border: 1px solid var(--line);
+      color: var(--ink);
       background: var(--card-bg);
-      transition: border-color 0.3s, background 0.3s;
     }
-    .pill:hover { border-color: var(--amber); background: rgba(232,164,53,0.08); }
-    /* Learning pill — same amber colour, dashed border to distinguish */
-    .pill.learning {
-      border-style: dashed;
-      opacity: 0.7;
-    }
-    .pill.learning:hover { opacity: 1; }
+    .pill.learning { border-style: dashed; color: var(--muted); }
 
     .about-cta {
-      display: inline-flex; align-items: center; gap: 12px;
-      font-family: 'DM Mono', monospace;
-      font-size: 0.72rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--bg);
-      background: var(--amber);
-      padding: 14px 28px;
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--paper);
+      background: var(--ink);
+      padding: 12px 22px;
       text-decoration: none;
-      transition: background 0.3s, transform 0.2s;
       border: none; cursor: pointer;
+      transition: background 0.2s;
     }
-    .about-cta:hover { background: var(--cream); transform: translateY(-2px); }
-    .about-cta svg { width: 14px; height: 14px; }
+    .about-cta:hover { background: var(--accent); }
+    .about-cta svg { width: 13px; height: 13px; }
 
-    .about-right { display: flex; justify-content: center; align-items: center; }
-    .about-avatar-wrap { position: relative; width: 320px; height: 400px; }
-    .about-avatar-bg {
-      position: absolute; inset: 0;
-      background: linear-gradient(135deg, var(--amber) 0%, var(--rust) 100%);
-      opacity: 0.12; border-radius: 2px;
+    .about-facts {
+      display: flex; gap: 32px; margin-top: 40px;
+      border-top: 1px solid var(--line); padding-top: 20px;
     }
-    .about-avatar-border { position: absolute; inset: 0; border: 1px solid var(--card-border); border-radius: 2px; }
-    .about-avatar-inner {
-      position: absolute; inset: 16px;
-      border: 1px solid rgba(232,164,53,0.1); border-radius: 2px;
-      display: flex; flex-direction: column; justify-content: flex-end; padding: 24px;
+    .about-fact-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; color: var(--muted); margin-bottom: 4px; }
+    .about-fact-value { font-family: 'Newsreader', serif; font-weight: 600; font-size: 1.15rem; }
+
+    .divider { padding: 0 64px; display: flex; align-items: center; gap: 16px; }
+    .divider-line { flex: 1; height: 1px; background: var(--line); }
+    .divider-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--muted); }
+
+    /* ---------- projects ---------- */
+    #projects { padding: 60px 64px; }
+    .section-title {
+      font-family: 'Newsreader', serif; font-style: italic; font-weight: 500;
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem); margin-bottom: 40px;
     }
-    .avatar-stat { margin-bottom: 12px; }
-    .avatar-stat-label { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
-    .avatar-stat-value { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--cream); letter-spacing: 0.05em; }
-    .avatar-stat-value em { color: var(--amber); font-style: normal; }
-    .avatar-corner { position: absolute; top: 24px; right: 24px; font-family: 'DM Mono', monospace; font-size: 0.55rem; letter-spacing: 0.2em; color: var(--amber); text-transform: uppercase; writing-mode: vertical-rl; }
-
-    .divider { padding: 0 80px; display: flex; align-items: center; gap: 20px; position: relative; z-index: 1; }
-    .divider-line { flex: 1; height: 1px; background: var(--grid); }
-    .divider-label { font-family: 'Bebas Neue', sans-serif; font-size: 0.9rem; letter-spacing: 0.3em; color: var(--muted); }
-
-    #projects { padding: 80px 80px; }
-    .projects-header { margin-bottom: 60px; }
-    .section-num { font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.25em; color: var(--rust); margin-bottom: 8px; }
-    .section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem, 5vw, 4.5rem); letter-spacing: 0.05em; line-height: 1; }
 
     .cards-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 32px;
+      gap: 28px;
     }
 
-    .tilt-card-wrap { perspective: 1200px; }
-    .tilt-card {
-      position: relative; border-radius: 4px; background: var(--card-bg);
-      border: 1px solid var(--card-border); overflow: hidden;
-      transform-style: preserve-3d;
-      transition: transform 0.1s ease-out, box-shadow 0.3s;
-      will-change: transform;
+    .project-card {
+      background: var(--card-bg);
+      border: 1px solid var(--line);
+      transition: border-color 0.2s, transform 0.2s;
     }
-    .tilt-card:hover { box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(232,164,53,0.3); }
-    .card-glare {
-      position: absolute; inset: 0; border-radius: 4px; pointer-events: none;
-      opacity: 0; transition: opacity 0.3s; z-index: 5;
-    }
-    .tilt-card:hover .card-glare { opacity: 1; }
+    .project-card:hover { border-color: var(--accent); transform: translateY(-3px); }
 
     .card-visual {
-      position: relative; height: 260px; overflow: hidden;
-      background: #0d0d0b;
+      position: relative; height: 230px; overflow: hidden;
+      background: #e4dcc6;
+      border-bottom: 1px solid var(--line);
     }
-    .card-visual::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(
-        to bottom,
-        rgba(10,10,8,0.15) 0%,
-        rgba(10,10,8,0.0) 40%,
-        rgba(10,10,8,0.55) 100%
-      );
-      mix-blend-mode: normal;
-      z-index: 2;
-      pointer-events: none;
-    }
-    .card-visual::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: rgba(232,164,53,0.08);
-      mix-blend-mode: color;
-      z-index: 3;
-      pointer-events: none;
-    }
-
-    .carousel-slide {
-      position: absolute; inset: 0;
-      opacity: 0;
-      transition: opacity 0.8s ease;
-      z-index: 1;
-    }
-    .carousel-slide.active { opacity: 1; }
-    .carousel-slide img {
+    .card-visual img {
       width: 100%; height: 100%;
       object-fit: cover;
-      object-position: center;
-      filter: saturate(0.7) contrast(1.1) brightness(0.85) sepia(0.18);
+      filter: saturate(0.8) sepia(0.08);
       display: block;
     }
-
     .card-visual-placeholder {
       position: absolute; inset: 0; z-index: 1;
       display: flex; align-items: center; justify-content: center;
-      background: linear-gradient(135deg, #1a1a16 0%, #0f0f0c 100%);
     }
-    .card-visual-placeholder svg { opacity: 0.12; color: var(--amber); }
-
-    .card-visual-grid {
-      position: absolute; inset: 0; z-index: 1; pointer-events: none;
-      background-image:
-        linear-gradient(rgba(240,235,224,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(240,235,224,0.04) 1px, transparent 1px);
-      background-size: 30px 30px;
-    }
+    .card-visual-placeholder svg { opacity: 0.25; color: var(--accent-2); }
     .card-tag {
-      position: absolute; top: 16px; right: 16px;
-      font-family: 'DM Mono', monospace; font-size: 0.6rem;
-      letter-spacing: 0.15em; text-transform: uppercase;
-      color: var(--amber); border: 1px solid rgba(232,164,53,0.4);
-      padding: 4px 10px; background: rgba(10,10,8,0.7);
-      backdrop-filter: blur(6px); z-index: 6;
+      position: absolute; top: 12px; right: 12px;
+      font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem;
+      color: var(--ink); border: 1px solid var(--line);
+      padding: 3px 9px; background: var(--paper);
     }
 
-    .carousel-dots {
-      position: absolute; bottom: 12px; left: 50%;
-      transform: translateX(-50%);
-      display: flex; gap: 6px; z-index: 6;
-    }
-    .carousel-dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: rgba(240,235,224,0.3);
-      transition: background 0.3s, transform 0.3s;
-      cursor: pointer; border: none; padding: 0;
-    }
-    .carousel-dot.active { background: var(--amber); transform: scale(1.3); }
-
-    .card-body { padding: 24px 28px 28px; }
-    .card-index { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.2em; color: var(--muted); margin-bottom: 8px; }
-    .card-title { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 0.05em; color: var(--cream); margin-bottom: 10px; line-height: 1.05; }
-    .card-desc { font-size: 0.83rem; line-height: 1.75; color: var(--muted); margin-bottom: 20px; }
-    .card-footer { display: flex; align-items: center; justify-content: space-between; }
+    .card-body { padding: 22px 24px 26px; }
+    .card-title { font-family: 'Newsreader', serif; font-weight: 600; font-size: 1.5rem; margin-bottom: 10px; }
+    .card-desc { font-size: 0.87rem; line-height: 1.7; color: var(--muted); margin-bottom: 18px; }
     .card-stack { display: flex; gap: 8px; flex-wrap: wrap; }
     .stack-chip {
-      font-family: 'DM Mono', monospace; font-size: 0.58rem;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--muted); background: rgba(240,235,224,0.04);
-      border: 1px solid rgba(240,235,224,0.08); padding: 3px 8px; border-radius: 2px;
+      font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem;
+      color: var(--muted); background: var(--paper);
+      border: 1px solid var(--line); padding: 3px 8px;
     }
 
-    #coming { padding: 80px 80px 120px; }
-    .coming-header { margin-bottom: 60px; }
-    .coming-grid {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 1px; background: var(--grid);
-      border: 1px solid rgba(240,235,224,0.06);
-    }
+    /* ---------- what's next ---------- */
+    #coming { padding: 60px 64px 100px; }
+
     .coming-photo-item {
-      grid-column: 1 / -1; background: var(--card-bg);
-      overflow: hidden; min-height: 300px;
-      display: flex; align-items: stretch;
-      transition: background 0.3s;
+      background: var(--card-bg); border: 1px solid var(--line);
+      overflow: hidden; display: flex; margin-bottom: 20px;
     }
-    .coming-photo-item:hover { background: #18180f; }
-    .coming-photo-left { flex: 1; padding: 40px 36px; display: flex; flex-direction: column; justify-content: center; }
+    .coming-photo-left { flex: 1; padding: 34px 32px; }
     .coming-photo-right {
-      width: 360px; position: relative; overflow: hidden;
-      background: #0e0e0c; display: flex; align-items: center; justify-content: center;
-      border-left: 1px solid rgba(240,235,224,0.06);
+      width: 320px; position: relative;
+      background: #e4dcc6; display: flex; align-items: center; justify-content: center;
+      border-left: 1px solid var(--line);
     }
-    .photo-placeholder-img { width: 100%; height: 100%; object-fit: cover; display: block; filter: saturate(0.6) brightness(0.75) sepia(0.2); }
     .photo-hint {
-      position: absolute; inset: 0;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
-      gap: 12px; text-align: center; padding: 28px;
+      gap: 10px; text-align: center; padding: 24px;
     }
-    .photo-hint svg { opacity: 0.2; color: var(--amber); width: 40px; height: 40px; }
-    .photo-hint-text { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); line-height: 1.9; }
-    .photo-hint-code { font-family: 'DM Mono', monospace; font-size: 0.6rem; color: var(--amber); background: rgba(232,164,53,0.08); border: 1px solid rgba(232,164,53,0.2); padding: 10px 14px; border-radius: 2px; margin-top: 4px; line-height: 1.7; text-align: left; word-break: break-all; }
+    .photo-hint svg { opacity: 0.3; color: var(--accent-2); width: 34px; height: 34px; }
+    .photo-hint-text { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; color: var(--muted); line-height: 1.7; }
 
+    .coming-title { font-family: 'Newsreader', serif; font-weight: 600; font-size: 1.3rem; margin-bottom: 10px; }
+    .coming-desc { font-size: 0.87rem; line-height: 1.7; color: var(--muted); }
+
+    .coming-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
     .coming-item {
-      background: var(--card-bg); padding: 36px 32px;
-      position: relative; overflow: hidden; transition: background 0.3s;
+      background: var(--card-bg); border: 1px solid var(--line);
+      padding: 30px 28px;
     }
-    .coming-item::before {
-      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
-      background: linear-gradient(90deg, var(--amber), var(--rust));
-      transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease;
+    .coming-icon { width: 30px; height: 30px; margin-bottom: 14px; color: var(--accent-2); }
+    .coming-badge {
+      display: inline-block; margin-top: 14px;
+      font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem;
+      color: var(--accent); border: 1px solid var(--accent); padding: 3px 8px;
     }
-    .coming-item:hover { background: #18180f; }
-    .coming-item:hover::before { transform: scaleX(1); }
-    .coming-num { font-family: 'Bebas Neue', sans-serif; font-size: 4rem; color: rgba(240,235,224,0.05); line-height: 1; margin-bottom: 12px; letter-spacing: 0.05em; }
-    .coming-icon { width: 36px; height: 36px; margin-bottom: 16px; color: var(--amber); opacity: 0.8; }
-    .coming-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 0.08em; color: var(--cream); margin-bottom: 10px; }
-    .coming-desc { font-size: 0.8rem; line-height: 1.7; color: var(--muted); }
-    .coming-badge { display: inline-block; margin-top: 16px; font-family: 'DM Mono', monospace; font-size: 0.55rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--rust); border: 1px solid rgba(196,80,42,0.3); padding: 3px 8px; }
 
-    footer { border-top: 1px solid var(--grid); padding: 32px 80px; display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 1; }
-    .footer-note { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.15em; color: var(--muted); }
-    .footer-amber { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 0.15em; color: var(--amber); }
+    footer {
+      border-top: 1px solid var(--line); padding: 26px 64px;
+      display: flex; justify-content: space-between; align-items: center;
+      font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; color: var(--muted);
+    }
 
-    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-    .reveal-delay-1 { transition-delay: 0.12s; }
-    .reveal-delay-2 { transition-delay: 0.24s; }
-    .reveal-delay-3 { transition-delay: 0.36s; }
-
-    @media (max-width: 960px) {
-      #about { grid-template-columns: 1fr; padding: 100px 32px 60px; }
-      .about-right { display: none; }
-      #projects { padding: 60px 32px; }
+    @media (max-width: 900px) {
+      #about, #projects, #coming, .divider, nav, footer { padding-left: 24px; padding-right: 24px; }
       .cards-grid { grid-template-columns: 1fr; }
-      #coming { padding: 60px 32px 80px; }
-      .coming-grid { grid-template-columns: 1fr; }
-      .coming-photo-item { flex-direction: column; min-height: auto; }
-      .coming-photo-right { width: 100%; height: 220px; border-left: none; border-top: 1px solid rgba(240,235,224,0.06); }
-      nav { padding: 18px 28px; }
-      .nav-links { gap: 20px; }
-      .divider { padding: 0 32px; }
-      footer { padding: 24px 32px; flex-direction: column; gap: 12px; text-align: center; }
+      .coming-photo-item { flex-direction: column; }
+      .coming-photo-right { width: 100%; height: 180px; border-left: none; border-top: 1px solid var(--line); }
+      .coming-row { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 10px; text-align: center; }
+      .about-facts { flex-wrap: wrap; }
     }
   </style>
 </head>
@@ -364,143 +244,110 @@
     <div class="nav-links">
       <a href="#about">About</a>
       <a href="#projects">Projects</a>
-      <a href="#coming">Future Ambitions</a>
+      <a href="#coming">What's Next</a>
     </div>
   </nav>
 
   <section id="about">
-    <div class="about-left reveal">
-      <div class="eyebrow">Student · Aspiring Robotics Engineer</div>
-      <h1 class="hero-name">Hi, I'm<br /><span>Denis</span></h1>
-      <p class="hero-tagline">
-        I'm a student developer with a passion for building with electronics and anything to do with technology.
-        I'm working towards a career in <strong>Robotics Engineering</strong>, combining code, hardware, and computer vision to bring helpful machines to life.
-        Currently, Im learning, building, and figuring it all out one project at a time.
-      </p>
-      <div class="about-pills">
-        <span class="pill">Python ★</span>
-        <span class="pill">HTML</span>
-        <span class="pill">CSS</span>
-        <span class="pill">Luau</span>
-        <span class="pill">Ultralytics YOLO</span>
-        <span class="pill">MediaPipe</span>
-        <span class="pill">Arduino [Learning]</span>
-      </div>
-      <a href="#projects" class="about-cta" onclick="smoothTo(event,'projects')">
-        See My Work
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </a>
+    <div class="eyebrow">Student · Aspiring Robotics Engineer</div>
+    <h1 class="hero-name">Hi, I'm <em>Denis</em></h1>
+    <p class="hero-tagline">
+      I'm a student who likes building things with electronics and code. Right now I'm working
+      towards a career in <strong>robotics engineering</strong> — mixing hardware, software, and
+      computer vision. I'm still learning most of this as I go, one project at a time.
+    </p>
+    <div class="about-pills">
+      <span class="pill">Python</span>
+      <span class="pill">HTML</span>
+      <span class="pill">CSS</span>
+      <span class="pill">Luau</span>
+      <span class="pill">Ultralytics YOLO</span>
+      <span class="pill">MediaPipe</span>
+      <span class="pill">OpenCV</span>
+      <span class="pill learning">Rust (learning)</span>
+      <span class="pill learning">ARM64 (learning)</span>
+      <span class="pill learning">Arduino (learning)</span>
     </div>
+    <a href="#projects" class="about-cta">
+      See my work
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
 
-    <div class="about-right reveal reveal-delay-2">
-      <div class="about-avatar-wrap">
-        <div class="about-avatar-bg"></div>
-        <div class="about-avatar-border"></div>
-        <div class="about-avatar-inner">
-          <div class="avatar-stat">
-            <div class="avatar-stat-label">Current Year</div>
-            <div class="avatar-stat-value">Year <em>11</em></div>
-          </div>
-          <div class="avatar-stat">
-            <div class="avatar-stat-label">Ambition</div>
-            <div class="avatar-stat-value">Robotics Eng.</div>
-          </div>
-          <div class="avatar-stat">
-            <div class="avatar-stat-label">Projects</div>
-            <div class="avatar-stat-value"><em>2</em> so far</div>
-          </div>
-        </div>
-        <div class="avatar-corner">imdeni.xyz · 2025</div>
+    <div class="about-facts">
+      <div>
+        <div class="about-fact-label">YEAR</div>
+        <div class="about-fact-value">12</div>
+      </div>
+      <div>
+        <div class="about-fact-label">GOAL</div>
+        <div class="about-fact-value">Robotics Eng.</div>
+      </div>
+      <div>
+        <div class="about-fact-label">PROJECTS</div>
+        <div class="about-fact-value">2 so far</div>
       </div>
     </div>
   </section>
 
   <div class="divider">
     <div class="divider-line"></div>
-    <div class="divider-label">My Work</div>
+    <div class="divider-label">My work</div>
     <div class="divider-line"></div>
   </div>
 
   <section id="projects">
-    <div class="projects-header reveal">
-      <div class="section-num">// 02</div>
-      <h2 class="section-title">Projects</h2>
-    </div>
+    <h2 class="section-title">Projects</h2>
 
     <div class="cards-grid">
 
-      <div class="tilt-card-wrap reveal reveal-delay-1">
-        <div class="tilt-card card1" data-tilt>
-          <div class="card-glare"></div>
-          <div class="card-visual">
-            <div class="card-visual-grid"></div>
-
-            <div class="carousel-slide active">
-              <img
-                src="https://raw.githubusercontent.com/xendeni/Imdeni/main/img1.jpeg"
-                alt="Robotic Hand – photo 1"
-                onerror="this.closest('.carousel-slide').style.display='none'; this.closest('.card-visual').querySelector('.card-visual-placeholder').style.display='flex';"
-              />
-            </div>
-       
-            <div class="card-visual-placeholder" style="display:none;">
-              <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-                <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
-              </svg>
-            </div>
-
-            <div class="card-tag">Hardware Build</div>
-            <div class="carousel-dots" id="dots-hand"></div>
+      <div class="project-card">
+        <div class="card-visual">
+          <img
+            src="https://raw.githubusercontent.com/xendeni/Imdeni/main/img1.jpeg"
+            alt="Robotic hand build"
+            onerror="this.style.display='none'; this.parentElement.querySelector('.card-visual-placeholder').style.display='flex';"
+          />
+          <div class="card-visual-placeholder" style="display:none;">
+            <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+              <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
+            </svg>
           </div>
-          <div class="card-body">
-            <div class="card-index">01 / 02</div>
-            <div class="card-title">Robotic Hand</div>
-            <p class="card-desc">
-              A fully functional robotic hand built from scratch using an Arduino and servo motors. Each finger is independently controlled, letting the hand grip, open, and pose on command. My first real dive into hardware programming and physical computing.
-            </p>
-            <div class="card-footer">
-              <div class="card-stack">
-                <span class="stack-chip">Arduino</span>
-                <span class="stack-chip">Servo Motors</span>
-                <span class="stack-chip">Medalpipe</span>
-              </div>
-            </div>
+          <div class="card-tag">Hardware</div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">Robotic Hand</div>
+          <p class="card-desc">
+            A functional robotic hand built from scratch with an Arduino and servo motors. Each
+            finger moves independently, so it can grip, open, and hold poses on command. This was
+            my first real project working with hardware instead of just code.
+          </p>
+          <div class="card-stack">
+            <span class="stack-chip">Arduino</span>
+            <span class="stack-chip">Servo motors</span>
+            <span class="stack-chip">MediaPipe</span>
           </div>
         </div>
       </div>
 
-      <div class="tilt-card-wrap reveal reveal-delay-2">
-        <div class="tilt-card card2" data-tilt>
-          <div class="card-glare"></div>
-          <div class="card-visual">
-            <div class="card-visual-grid"></div>
-
-
-            <div class="carousel-slide active">
-    
-              <div class="card-visual-placeholder" style="display:flex; position:relative; inset:unset; width:100%; height:100%;">
-                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-                  <path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 8v4l3 3"/><circle cx="19" cy="5" r="3"/>
-                </svg>
-              </div>
-            </div>
-   
-            <div class="card-tag">AI / Python</div>
-            <div class="carousel-dots" id="dots-ai"></div>
+      <div class="project-card">
+        <div class="card-visual">
+          <div class="card-visual-placeholder" style="display:flex;">
+            <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+              <path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 8v4l3 3"/><circle cx="19" cy="5" r="3"/>
+            </svg>
           </div>
-          <div class="card-body">
-            <div class="card-index">02 / 02</div>
-            <div class="card-title">AI Homework Assistant</div>
-            <p class="card-desc">
-              A python program which uses Openai's API to scan a part of the screen and respond with an answer, Its actually pretty cook and useful for many other things aside from my homework.
-            </p>
-            <div class="card-footer">
-              <div class="card-stack">
-                <span class="stack-chip">Python</span>
-                <span class="stack-chip">GPT API</span>
-                <span class="stack-chip">OpenAI</span>
-              </div>
-            </div>
+          <div class="card-tag">Python</div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">AI Homework Assistant</div>
+          <p class="card-desc">
+            A Python program that uses the OpenAI API to scan part of the screen and answer
+            whatever's there. Built it for homework, but it's ended up being useful for a lot more
+            than that.
+          </p>
+          <div class="card-stack">
+            <span class="stack-chip">Python</span>
+            <span class="stack-chip">OpenAI API</span>
           </div>
         </div>
       </div>
@@ -510,147 +357,70 @@
 
   <div class="divider">
     <div class="divider-line"></div>
-    <div class="divider-label">What's Next</div>
+    <div class="divider-label">What's next</div>
     <div class="divider-line"></div>
   </div>
 
   <section id="coming">
-    <div class="coming-header reveal">
-      <div class="section-num">// 03</div>
-      <h2 class="section-title">What's to Come</h2>
-    </div>
+    <h2 class="section-title">What's to Come</h2>
 
-    <div class="coming-grid">
-
-      <div class="coming-photo-item reveal">
-        <div class="coming-photo-left">
-          <div class="coming-num">01</div>
-          <svg class="coming-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+    <div class="coming-photo-item">
+      <div class="coming-photo-left">
+        <svg class="coming-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+          <circle cx="12" cy="13" r="3"/>
+        </svg>
+        <div class="coming-title">Aspirations</div>
+        <p class="coming-desc">My dream is to build a device that makes a real difference for people who face challenges or disadvantages.</p>
+      </div>
+      <div class="coming-photo-right">
+        <div class="photo-hint">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
             <path d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
             <circle cx="12" cy="13" r="3"/>
           </svg>
-          <div class="coming-title">Aspirations</div>
-          <p class="coming-desc">My dream is to develop a device that makes a meaningful difference in the lives of people who face challenges and disadvantages.</p>
-        </div>
-        <div class="coming-photo-right">
-
-          <div class="photo-hint">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
-              <circle cx="12" cy="13" r="3"/>
-            </svg>
-            <div class="photo-hint-text">Ill add a photo of something soon, pretend its very cool.</div>
-
-            </div>
-          </div>
+          <div class="photo-hint-text">Photo coming soon</div>
         </div>
       </div>
+    </div>
 
-      <div class="coming-item reveal reveal-delay-1">
-        <div class="coming-num">02</div>
+    <div class="coming-row">
+      <div class="coming-item">
         <svg class="coming-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
           <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
           <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
         </svg>
         <div class="coming-title">Computer Vision Builds</div>
-        <p class="coming-desc">I have many ideas for builds using computer vision technology among the likes of YOLO and hope to put these ideas into fruition soon!</p>
+        <p class="coming-desc">I've got a bunch of ideas for projects using computer vision — things like YOLO — and I'm hoping to start building them soon.</p>
       </div>
 
-      <div class="coming-item reveal reveal-delay-2">
-        <div class="coming-num">03</div>
+      <div class="coming-item">
         <svg class="coming-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
           <path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
           <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
         </svg>
         <div class="coming-title">More Hardware Projects</div>
-        <p class="coming-desc">The robotic hand is just the beginning. More Arduino and sensor-based (hint hint) builds are planned and pushing towards smarter, more machines are inevitable as my skills keep growing.</p>
+        <p class="coming-desc">The robotic hand is just the start. I've got more Arduino and sensor-based builds planned as my skills keep growing.</p>
         <span class="coming-badge">Soon</span>
       </div>
-
     </div>
   </section>
 
   <footer>
-    <div class="footer-note">© 2025 imdeni.xyz / Built from scratch (maybe a little help)</div>
-    <div class="footer-amber">dupedeni</div>
+    <div>© 2025 imdeni.xyz</div>
+    <div>dupedeni</div>
   </footer>
 
   <script>
-    function smoothTo(e, id) {
-      e.preventDefault();
-      document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
-    }
-
-    document.querySelectorAll('a[href^="#"]').forEach(link => {
-      link.addEventListener('click', e => {
-        const id = link.getAttribute('href').slice(1);
-        const target = document.getElementById(id);
-        if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
-      });
-    });
-
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-    function initCarousel(card, dotsId) {
-      const slides = card.querySelectorAll('.carousel-slide');
-      const dotsContainer = document.getElementById(dotsId);
-      if (slides.length <= 1) return; // only animate if 2+ slides
-
-      slides.forEach((_, i) => {
-        const dot = document.createElement('button');
-        dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
-        dot.addEventListener('click', () => goTo(i));
-        dotsContainer.appendChild(dot);
-      });
-
-      let current = 0;
-      const dots = dotsContainer.querySelectorAll('.carousel-dot');
-
-      function goTo(idx) {
-        slides[current].classList.remove('active');
-        dots[current].classList.remove('active');
-        current = idx;
-        slides[current].classList.add('active');
-        dots[current].classList.add('active');
-      }
-
-      setInterval(() => { goTo((current + 1) % slides.length); }, 3000);
-    }
-
-    initCarousel(document.querySelector('.card1'), 'dots-hand');
-    initCarousel(document.querySelector('.card2'), 'dots-ai');
-
-    document.querySelectorAll('[data-tilt]').forEach(card => {
-      const wrap = card.closest('.tilt-card-wrap');
-      const glare = card.querySelector('.card-glare');
-      const MAX = 12;
-
-      wrap.addEventListener('mousemove', e => {
-        const r = wrap.getBoundingClientRect();
-        const dx = (e.clientX - r.left - r.width  / 2) / (r.width  / 2);
-        const dy = (e.clientY - r.top  - r.height / 2) / (r.height / 2);
-        card.style.transform = `rotateX(${-dy*MAX}deg) rotateY(${dx*MAX}deg) scale3d(1.02,1.02,1.02)`;
-        card.style.transition = 'transform 0.05s linear, box-shadow 0.3s';
-        const gx = ((e.clientX - r.left) / r.width)  * 100;
-        const gy = ((e.clientY - r.top)  / r.height) * 100;
-        glare.style.background = `radial-gradient(circle at ${gx}% ${gy}%, rgba(255,255,255,0.09) 0%, transparent 65%)`;
-        glare.style.opacity = '1';
-      });
-
-      wrap.addEventListener('mouseleave', () => {
-        card.style.transform = 'rotateX(0) rotateY(0) scale3d(1,1,1)';
-        card.style.transition = 'transform 0.6s cubic-bezier(0.23,1,0.32,1), box-shadow 0.3s';
-        glare.style.opacity = '0';
-      });
-    });
-
-    window.addEventListener('scroll', () => {
-      const y = window.scrollY;
-      document.querySelectorAll('.about-avatar-wrap').forEach(el => {
-        el.style.transform = `translateY(${y * 0.06}px)`;
+    // smooth-scroll for on-page nav links
+    document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        var id = link.getAttribute('href').slice(1);
+        var target = document.getElementById(id);
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
       });
     });
   </script>
