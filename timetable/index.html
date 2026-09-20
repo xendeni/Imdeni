@@ -1,1 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>timetable — imdeni.xyz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,500;0,600;1,500&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
+:root {
+  --paper: #f2ede1;
+  --ink: #201f1a;
+  --line: #cdc4ac;
+  --accent: #b23a2e;
+  --accent-2: #34544a;
+  --muted: #726c5c;
+  --card-bg: #ece5d4;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 400;
+}
+
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(rgba(32,31,26,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(32,31,26,0.05) 1px, transparent 1px);
+  background-size: 28px 28px;
+  pointer-events: none; z-index: 0;
+}
+
+nav {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 100;
+  padding: 20px 48px;
+  display: flex; justify-content: space-between; align-items: center;
+  background: rgba(242,237,225,0.9);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--line);
+}
+.nav-logo { font-family: 'IBM Plex Mono', monospace; font-size: 0.95rem; color: var(--ink); text-decoration: none; }
+.nav-tag { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--muted); }
+
+section { position: relative; z-index: 1; }
+
+#now {
+  padding: 60px 64px 40px;
+  max-width: 900px;
+}
+.eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; color: var(--accent); margin-bottom: 18px; }
+.now-title {
+  font-family: 'Newsreader', serif; font-style: italic; font-weight: 500;
+  font-size: clamp(2.2rem, 5.5vw, 3.4rem); line-height: 1.1; margin-bottom: 8px;
+}
+.now-clock { font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem; color: var(--muted); margin-bottom: 30px; }
+
+.now-card {
+  background: var(--card-bg); border: 1px solid var(--line);
+  padding: 30px 32px; display: flex; justify-content: space-between; align-items: center; gap: 24px;
+  flex-wrap: wrap;
+}
+.now-card.active { border-color: var(--accent); }
+.now-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; color: var(--muted); margin-bottom: 8px; }
+.now-subject { font-family: 'Newsreader', serif; font-weight: 600; font-size: 1.8rem; }
+.now-period { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; color: var(--accent); margin-top: 6px; }
+.now-remaining { text-align: right; }
+.now-remaining-val { font-family: 'Newsreader', serif; font-weight: 600; font-size: 1.4rem; }
+.now-remaining-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; color: var(--muted); }
+
+.next-row { display: flex; gap: 8px; margin-top: 18px; font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; color: var(--muted); }
+.next-row .accent { color: var(--accent-2); }
+
+.divider { padding: 0 64px; display: flex; align-items: center; gap: 16px; }
+.divider-line { flex: 1; height: 1px; background: var(--line); }
+.divider-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--muted); }
+
+#grid { padding: 50px 64px 90px; }
+.section-title { font-family: 'Newsreader', serif; font-style: italic; font-weight: 500; font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: 30px; }
+
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); background: var(--card-bg); }
+table { width: 100%; border-collapse: collapse; min-width: 640px; }
+th, td {
+  font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem;
+  padding: 12px 14px; text-align: left; border-bottom: 1px solid var(--line); border-right: 1px solid var(--line);
+  white-space: nowrap;
+}
+th:last-child, td:last-child { border-right: none; }
+tr:last-child td { border-bottom: none; }
+th { color: var(--muted); font-weight: 500; background: var(--paper); }
+.time-col { color: var(--muted); }
+td.subject-cell { font-family: 'IBM Plex Sans', sans-serif; font-size: 0.8rem; white-space: normal; }
+td.free-cell { color: var(--muted); font-style: italic; }
+.today-col { background: rgba(178,58,46,0.06); }
+.now-cell { outline: 2px solid var(--accent); outline-offset: -2px; position: relative; }
+.now-cell::after {
+  content: '●'; color: var(--accent); font-size: 0.5rem; margin-left: 6px;
+}
+.fixed-row td { color: var(--muted); font-style: italic; background: rgba(52,84,74,0.05); }
+
+footer {
+  border-top: 1px solid var(--line); padding: 26px 64px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; color: var(--muted);
+  padding-bottom: calc(26px + env(safe-area-inset-bottom, 0px));
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #1c1a16; --ink: #ece6d7; --line: #423d31; --card-bg: #26221b; --muted: #9a927d;
+    --accent: #d4614f; --accent-2: #5c9082;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #1c1a16; --ink: #ece6d7; --line: #423d31; --card-bg: #26221b; --muted: #9a927d;
+  --accent: #d4614f; --accent-2: #5c9082;
+}
+
+@media (max-width: 900px) {
+  #now, #grid, .divider, nav, footer { padding-left: 20px; padding-right: 20px; }
+  .now-card { flex-direction: column; align-items: flex-start; }
+  .now-remaining { text-align: left; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#now">imdeni.xyz</a>
+  <span class="nav-tag">timetable</span>
+</nav>
+
+<section id="now">
+  <div class="eyebrow">Live</div>
+  <h1 class="now-title">Right now</h1>
+  <div class="now-clock" id="clock">—</div>
+
+  <div class="now-card" id="nowCard">
+    <div>
+      <div class="now-label">CURRENT</div>
+      <div class="now-subject" id="nowSubject">—</div>
+      <div class="now-period" id="nowPeriod">—</div>
+    </div>
+    <div class="now-remaining">
+      <div class="now-remaining-val" id="nowRemaining">—</div>
+      <div class="now-remaining-label">left</div>
+    </div>
+  </div>
+  <div class="next-row" id="nextRow"></div>
+</section>
+
+<div class="divider">
+  <div class="divider-line"></div>
+  <div class="divider-label">Week</div>
+  <div class="divider-line"></div>
+</div>
+
+<section id="grid">
+  <h2 class="section-title">Full timetable</h2>
+  <div class="table-wrap">
+    <table id="table"></table>
+  </div>
+</section>
+
+<footer>
+  <div>© 2025 imdeni.xyz</div>
+  <div>dupedeni</div>
+</footer>
+
+<script>
+const SLOTS = [
+  { key: 'P1', label: 'P1', start: '08:30', end: '09:20', fixed: false },
+  { key: 'P2', label: 'P2', start: '09:20', end: '10:15', fixed: false },
+  { key: 'BREAK', label: 'Break', start: '10:15', end: '10:35', fixed: true },
+  { key: 'P3', label: 'P3', start: '10:35', end: '11:30', fixed: false },
+  { key: 'P4', label: 'P4', start: '11:30', end: '12:25', fixed: false },
+  { key: 'TUTOR', label: 'Tutor', start: '12:25', end: '12:55', fixed: true },
+  { key: 'LUNCH', label: 'Lunch', start: '12:55', end: '13:25', fixed: true },
+  { key: 'P5', label: 'P5', start: '13:25', end: '14:20', fixed: false },
+  { key: 'P6', label: 'P6', start: '14:20', end: '15:15', fixed: false },
+];
+
+const DAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
+const SCHEDULE = {
+  Monday:    { P1: 'Free', P2: 'Biology', P3: 'Free', P4: 'Biology', P5: 'Free', P6: 'Economics' },
+  Tuesday:   { P1: 'Economics', P2: 'Computer Science', P3: 'Free', P4: 'Free', P5: 'Biology', P6: 'Free' },
+  Wednesday: { P1: 'Economics', P2: 'Free', P3: 'Computer Science', P4: 'Free', P5: 'Free', P6: 'Free' },
+  Thursday:  { P1: 'Computer Science', P2: 'Biology', P3: 'Free', P4: 'Biology', P5: 'Computer Science', P6: 'Economics' },
+  Friday:    { P1: 'Free', P2: 'Free', P3: 'Economics', P4: 'Computer Science', P5: 'Free', P6: 'Free' },
+};
+
+const SCHOOL_DAYS = ['Monday','Tuesday','Wednesday','Thursday','Friday'];
+
+function toMinutes(hhmm) {
+  const [h, m] = hhmm.split(':').map(Number);
+  return h * 60 + m;
+}
+
+function fmtTime(d) {
+  return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+}
+
+function subjectFor(day, slotKey) {
+  if (!SCHEDULE[day]) return null;
+  return SCHEDULE[day][slotKey] || null;
+}
+
+function buildTable() {
+  const table = document.getElementById('table');
+  const today = DAYS[new Date().getDay()];
+  let html = '<thead><tr><th>Time</th>';
+  SCHOOL_DAYS.forEach(d => {
+    html += `<th class="${d === today ? 'today-col' : ''}">${d}</th>`;
+  });
+  html += '</tr></thead><tbody>';
+
+  SLOTS.forEach(slot => {
+    if (slot.fixed) {
+      html += `<tr class="fixed-row"><td class="time-col">${slot.label}<br>${slot.start}–${slot.end}</td>`;
+      SCHOOL_DAYS.forEach(d => {
+        html += `<td class="${d === today ? 'today-col' : ''}">${slot.label}</td>`;
+      });
+      html += '</tr>';
+    } else {
+      html += `<tr><td class="time-col">${slot.label}<br>${slot.start}–${slot.end}</td>`;
+      SCHOOL_DAYS.forEach(d => {
+        const subj = subjectFor(d, slot.key);
+        const isFree = subj === 'Free';
+        html += `<td class="subject-cell ${isFree ? 'free-cell' : ''} ${d === today ? 'today-col' : ''}" data-day="${d}" data-slot="${slot.key}">${subj || '—'}</td>`;
+      });
+      html += '</tr>';
+    }
+  });
+
+  html += '</tbody>';
+  table.innerHTML = html;
+}
+
+function getCurrentSlot(now) {
+  const mins = now.getHours() * 60 + now.getMinutes();
+  for (const slot of SLOTS) {
+    if (mins >= toMinutes(slot.start) && mins < toMinutes(slot.end)) {
+      return slot;
+    }
+  }
+  return null;
+}
+
+function getNextSlot(now) {
+  const mins = now.getHours() * 60 + now.getMinutes();
+  const day = DAYS[now.getDay()];
+  if (SCHOOL_DAYS.includes(day)) {
+    for (const slot of SLOTS) {
+      if (toMinutes(slot.start) > mins) return { slot, day };
+    }
+  }
+  let idx = now.getDay();
+  for (let i = 1; i <= 7; i++) {
+    const nd = DAYS[(idx + i) % 7];
+    if (SCHOOL_DAYS.includes(nd)) {
+      return { slot: SLOTS[0], day: nd };
+    }
+  }
+  return null;
+}
+
+function describeSlot(day, slot) {
+  if (!slot) return 'Free';
+  if (slot.key === 'BREAK') return 'Break';
+  if (slot.key === 'TUTOR') return 'Tutor time';
+  if (slot.key === 'LUNCH') return 'Lunch';
+  const subj = subjectFor(day, slot.key);
+  return subj || 'Free';
+}
+
+function tick() {
+  const now = new Date();
+  document.getElementById('clock').textContent = `${DAYS[now.getDay()]}, ${fmtTime(now)}`;
+
+  const day = DAYS[now.getDay()];
+  const isSchoolDay = SCHOOL_DAYS.includes(day);
+  const card = document.getElementById('nowCard');
+  const subjectEl = document.getElementById('nowSubject');
+  const periodEl = document.getElementById('nowPeriod');
+  const remainingEl = document.getElementById('nowRemaining');
+  const nextRow = document.getElementById('nextRow');
+
+  let slot = isSchoolDay ? getCurrentSlot(now) : null;
+
+  if (slot) {
+    card.classList.add('active');
+    subjectEl.textContent = describeSlot(day, slot);
+    periodEl.textContent = `${slot.label} · ${slot.start}–${slot.end}`;
+    const endMins = toMinutes(slot.end);
+    const nowMins = now.getHours() * 60 + now.getMinutes();
+    const secsLeft = (endMins - nowMins) * 60 - now.getSeconds();
+    const h = Math.floor(secsLeft / 3600);
+    const m = Math.floor((secsLeft % 3600) / 60);
+    remainingEl.textContent = h > 0 ? `${h}h ${m}m` : `${m}m`;
+  } else {
+    card.classList.remove('active');
+    subjectEl.textContent = isSchoolDay ? 'Free' : 'No school';
+    periodEl.textContent = isSchoolDay ? 'Outside timetable hours' : day;
+    remainingEl.textContent = '—';
+  }
+
+  const next = getNextSlot(now);
+  if (next) {
+    const label = describeSlot(next.day, next.slot);
+    const sameDay = next.day === day;
+    nextRow.innerHTML = `Next: <span class="accent">${label}</span> — ${sameDay ? 'today' : next.day}, ${next.slot.start}`;
+  } else {
+    nextRow.innerHTML = '';
+  }
+
+  document.querySelectorAll('.now-cell').forEach(el => el.classList.remove('now-cell'));
+  if (slot && !slot.fixed) {
+    const cell = document.querySelector(`td[data-day="${day}"][data-slot="${slot.key}"]`);
+    if (cell) cell.classList.add('now-cell');
+  }
+}
+
+buildTable();
+tick();
+setInterval(tick, 1000);
+</script>
+</body>
+</html>
